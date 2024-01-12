@@ -1,12 +1,11 @@
-package org.example.camp.K;
+package org.example.camp.A;
 
-import org.example.camp.K.model.Score;
-import org.example.camp.K.model.Student;
-import org.example.camp.K.model.Subject;
+import camp.model.Score;
+import camp.model.Student;
+import camp.model.Subject;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.Scanner;
 
 /**
@@ -26,8 +25,6 @@ public class CampManagementApplication {
     // 과목 타입
     private static String SUBJECT_TYPE_MANDATORY = "MANDATORY";
     private static String SUBJECT_TYPE_CHOICE = "CHOICE";
-
-
 
     // index 관리 필드
     private static int studentIndex;
@@ -100,7 +97,6 @@ public class CampManagementApplication {
                 )
         );
         ScoreStore = new ArrayList<>();
-        ScoreStore.add(new Score(getStudentId(), getsubtitle(), getRound(), getScore(), getGrade()));
     }
 
     // index 자동 증가
@@ -216,72 +212,11 @@ public class CampManagementApplication {
         System.out.print("\n관리할 수강생의 번호를 입력하시오...");
         return sc.next();
     }
-    private static String getsubtitle() {
-        System.out.print("\n과목을 입력해 주세요");
-        return sc.next();
-    }
-    private static int getRound() {
-        System.out.print("\n회차를 입력해 주세요");
-        return sc.nextInt();
-    }
-    private static int getScore() {
-        System.out.print("\n점수를 입력해 주세요");
-        return sc.nextInt();
-    }
-    private static String getGrade() {
-        String grade ="0";
-        if (Objects.equals(getsubtitle(), "Java") || Objects.equals(getsubtitle(), "객체지향") || Objects.equals(getsubtitle(), "Spring") || Objects.equals(getsubtitle(), "JAP") || Objects.equals(getsubtitle(), "MySQL")) {
-            if (getScore() >= 95) {
-                grade = "A";
-            } else if (getScore() <= 94 && getScore() >= 90) {
-                grade = "B";
-            } else if (getScore() <= 89 && getScore() >= 80) {
-                grade = "C";
-            } else if (getScore() <= 79 && getScore() >= 70) {
-                grade = "D";
-            } else if (getScore() <= 69 && getScore() >= 60) {
-                grade = "F";
-            } else {
-                grade = "N";
-            }
-
-        } else if (Objects.equals(getsubtitle(), "디자인 패턴") || Objects.equals(getsubtitle(), "Spring Security") || Objects.equals(getsubtitle(), "Redis") || Objects.equals(getsubtitle(), "MongoDB")) {
-            if (getScore() >= 90) {
-                grade = "A";
-            } else if (getScore() <= 89 && getScore() >= 80) {
-                grade = "B";
-            } else if (getScore() <= 79 && getScore() >= 70) {
-                grade = "C";
-            } else if (getScore() <= 69 && getScore() >= 60) {
-                grade = "D";
-            } else if (getScore() <= 59 && getScore() >= 50) {
-                grade = "F";
-            } else {
-                grade = "N";
-            }
-        }
-
-        return grade;
-    }
-
-
-
-
-
 
     // 수강생의 과목별 시험 회차 및 점수 등록
     private static void createScore() {
-
         String studentId = getStudentId(); // 관리할 수강생 고유 번호
-        System.out.println(studentId + " 번 학생의 점수 등록을 시작합니다");
-        String subtitle = getsubtitle();    // 과목
-        int round = getRound();         //회차
-        int score = getScore();         //점수
-        String grade = getGrade();
-
-
         System.out.println("시험 점수를 등록합니다...");
-
         // 기능 구현
         System.out.println("\n점수 등록 성공!");
     }

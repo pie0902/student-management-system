@@ -1,4 +1,4 @@
-package org.example.camp.K.model;
+package org.example.camp.A.model;
 
 public class Student {
     private String studentId;
