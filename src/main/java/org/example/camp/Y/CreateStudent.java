@@ -1,7 +1,6 @@
 package org.example.camp.Y;
 
 import org.example.camp.CampManagementApplication;
-import org.example.camp.P.CreateScore;
 import org.example.camp.model.Student;
 import org.example.camp.model.Subject;
 
@@ -33,6 +32,7 @@ public class CreateStudent {
         Student student = new Student(CampManagementApplication.getSequence(), studentName);
         System.out.println(student);
         studentStore.put(student.getStudentId(), student);// 수강생 인스턴스 생성 예시 코드
+        CampManagementApplication.setStudentStore(student.getStudentId(),student);
         index = selectSubject();
         for (int idName : index) {
             if (idName == 0) {

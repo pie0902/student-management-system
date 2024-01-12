@@ -1,4 +1,4 @@
-package org.example.camp.P;
+package org.example.camp.K;
 
 import org.example.camp.model.Score;
 

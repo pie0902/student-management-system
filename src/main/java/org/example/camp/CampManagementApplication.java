@@ -1,7 +1,7 @@
 package org.example.camp;
 
 
-import org.example.camp.P.CreateScore;
+import org.example.camp.K.CreateScore;
 import org.example.camp.Y.CreateStudent;
 import org.example.camp.model.Score;
 import org.example.camp.model.Student;
@@ -17,15 +17,14 @@ import java.util.List;
  * 프로젝트 구조를 변경하거나 기능을 추가해도 괜찮습니다!
  * 구현에 도움을 주기위한 Base 프로젝트입니다. 자유롭게 이용해주세요!
  */
-//일단    Map<학생 ID, List<과목ID>>       로 한 학생당 어떤 과목 수강하는지 관리하는 리스트 만들기
+// 일단    Map<학생 ID, List<과목ID>>       로 한 학생당 어떤 과목 수강하는지 관리하는 리스트 만들기
 // 과목 ID를 고정시키기
 // 점수 관리해주기 Map<학생ID,Map<과목ID,List<점수>>
 public class CampManagementApplication {
-    private static Map<String,List<Subject>> management;
+    private static Map<String,List<Subject>> management; //Map<학생 ID, List<과목ID>>
     // 데이터 저장소
 
     private static HashMap<String,Student> studentStore;
-    private static List<Subject> subjectStore;
     private static List<Score> ScoreStore;
     // 과목 타입
     private static String SUBJECT_TYPE_MANDATORY = "MANDATORY";
@@ -33,6 +32,7 @@ public class CampManagementApplication {
     // index 관리 필드
     private static int studentIndex;
     private static final String INDEX_TYPE_STUDENT = "ST";
+
 
     // 스캐너
     private static Scanner sc = new Scanner(System.in);
@@ -54,6 +54,9 @@ public class CampManagementApplication {
     public static void setManagement(String string,List<Subject> subjectList) {
         management.put(string,subjectList);
     }
+    public static void setStudentStore(String studentId,Student student){
+        studentStore.put(studentId,student);
+    }
 
 
 
@@ -61,53 +64,6 @@ public class CampManagementApplication {
     private static void setInitData() {
         management = new HashMap<>();
         studentStore = new HashMap<>();
-        subjectStore = List.of(
-                new Subject(
-                        1,
-                        "Java",
-                        SUBJECT_TYPE_MANDATORY
-                ),
-                new Subject(
-                        2,
-                        "객체지향",
-                        SUBJECT_TYPE_MANDATORY
-                ),
-                new Subject(
-                        3,
-                        "Spring",
-                        SUBJECT_TYPE_MANDATORY
-                ),
-                new Subject(
-                        4,
-                        "JPA",
-                        SUBJECT_TYPE_MANDATORY
-                ),
-                new Subject(
-                        5,
-                        "MySQL",
-                        SUBJECT_TYPE_MANDATORY
-                ),
-                new Subject(
-                        6,
-                        "디자인 패턴",
-                        SUBJECT_TYPE_CHOICE
-                ),
-                new Subject(
-                        7,
-                        "Spring Security",
-                        SUBJECT_TYPE_CHOICE
-                ),
-                new Subject(
-                        8,
-                        "Redis",
-                        SUBJECT_TYPE_CHOICE
-                ),
-                new Subject(
-                        9,
-                        "MongoDB",
-                        SUBJECT_TYPE_CHOICE
-                )
-        );
         ScoreStore = new ArrayList<>();
     }
 
@@ -163,91 +119,10 @@ public class CampManagementApplication {
         }
     }
 
-//    private static List<Integer> selectSubject(){
-//        List<Integer> subSelectList = new ArrayList<>();
-//        int num;
-//        int cnt1 = 0;
-//        int cnt2 = 0;
-//        while(true) {
-//            System.out.println("\n과목을 선택하세요");
-//            System.out.println("[필수]\n1.Java 2.객체지향 3.Spring 4.JPA 5.MySQL" +
-//                    "\n[선택]\n6.디자인 패턴 7.Spring 8.SecurityRedis 9.MongoDB");
-//            System.out.println("종료를 원하신다면 0을 눌러주세요");
-//            num = sc.nextInt();
-//            sc.nextLine();
-//            if(num==0) {
-//                if (cnt1 < 3 && cnt2 < 2) {
-//                    System.out.println("필수과목을 " + cnt1 + "개 " + "선택과목을 " + cnt2 + "개 선택하셨습니다.");
-//                    System.out.println("필수과목은 3개 이상, 선택과목은 2개 이상을 선택하세요");
-//                }
-//                else{
-//                    return subSelectList;
-//                }
-//            }
-//            else{
-//                //필수과목
-//                if (num > 0 && num <= 5) {
-//                    if (!subSelectList.contains(num)) {
-//                        cnt1++;
-//                        subSelectList.add(num);
-//                        for(int a : subSelectList){
-//                            System.out.println(a);
-//                        }
-//                    }
-//                    else{
-//                        System.out.println("\n\n중복된 과목입니다 다시 선택하세요\n\n");
-//                    }
-//                }
-//                //선택과목
-//                else if (5 < num && num < 10) {
-//                    if (!subSelectList.contains(num)) {
-//                        cnt2++;
-//                        subSelectList.add(num);
-//                    }
-//                    else{
-//                        System.out.println("중복된 과목입니다 다시 선택하세요");
-//                    }
-//                }
-//            }
-//
-//        }
-//
-//    }
     // 수강생 등록
     private static void createStudent() {
         CreateStudent createStudent = new CreateStudent();
         createStudent.mkStudent();
-//        Subject subject;
-//        String[] titleList = {"Java", "객체지향", "Spring", "JPA", "MySQL", "디자인 패턴", "Spring", "SecurityReids", "MongoDB"};
-//        List<Integer> index;
-//        System.out.println("\n수강생을 등록합니다...");
-//        System.out.print("수강생 이름 입력: ");
-//        String studentName = sc.next();
-//        // 기능 구현 (필수 과목, 선택 과목)
-//        Student student = new Student(sequence(), studentName);
-//        studentStore.put(student.getStudentId(),student);// 수강생 인스턴스 생성 예시 코드
-//        index = selectSubject();
-//        for (int idName : index) {
-//            if(idName==0){
-//                continue;
-//            }
-//            String subJectName = titleList[idName-1];
-//            String type;
-//            if(idName<5){
-//                type = SUBJECT_TYPE_MANDATORY;
-//            }
-//            else{
-//                type = SUBJECT_TYPE_CHOICE;
-//            }
-//            subject = new Subject(idName,subJectName, type);
-//            newSubjectStore.add(subject);
-//            }
-//            // 기능 구현
-//            for(Subject a:newSubjectStore) {
-//                System.out.println(a);
-//            }
-//            management.put(student.getStudentId(),newSubjectStore);
-//            System.out.println("수강생 등록 성공!\n");
     }
     // 수강생 목록 조회
     private static void inquireStudent() {
@@ -324,6 +199,7 @@ public class CampManagementApplication {
     //민규님
    private static void createScore() {
             CreateScore score = new CreateScore();
+            score.checkScore();
             ScoreStore.add(score.getScoreStore());
    }
 
