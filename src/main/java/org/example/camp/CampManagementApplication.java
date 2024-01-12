@@ -24,7 +24,9 @@ public class CampManagementApplication {
     private static Map<String,List<Subject>> management; //Map<학생 ID, List<과목ID>>
     // 데이터 저장소
 
+    //학생관리
     private static HashMap<String,Student> studentStore;
+
     private static List<Score> ScoreStore;
     // 과목 타입
     private static String SUBJECT_TYPE_MANDATORY = "MANDATORY";
