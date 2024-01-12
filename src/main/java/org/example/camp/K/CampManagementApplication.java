@@ -1,15 +1,15 @@
-package org.example.camp;
+package org.example.camp.K;
 
+import org.example.camp.K.model.Score;
+import org.example.camp.K.model.Student;
+import org.example.camp.K.model.Subject;
 
-import org.example.camp.K.CreateScore;
-import org.example.camp.Y.CreateStudent;
-import org.example.camp.model.Score;
-import org.example.camp.model.Student;
-import org.example.camp.model.Subject;
-import java.util.*;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+import java.util.Scanner;
 
-/*
+/**
  * Notification
  * Java, 객체지향이 아직 익숙하지 않은 분들은 위한 소스코드 틀입니다.
  * main 메서드를 실행하면 프로그램이 실행됩니다.
@@ -17,26 +17,25 @@ import java.util.List;
  * 프로젝트 구조를 변경하거나 기능을 추가해도 괜찮습니다!
  * 구현에 도움을 주기위한 Base 프로젝트입니다. 자유롭게 이용해주세요!
  */
-
-// 일단    Map<학생 ID, List<과목ID>>       로 한 학생당 어떤 과목 수강하는지 관리하는 리스트 만들기
-// 과목 ID를 고정시키기
-// 점수 관리해주기 Map<학생ID,Map<과목ID,List<점수>>
-
 public class CampManagementApplication {
-    private static Map<String,List<Subject>> management; //Map<학생 ID, List<과목ID>>
     // 데이터 저장소
-
-    //학생관리
-    private static HashMap<String,Student> studentStore;
-
+    private static List<Student> studentStore;
+    private static List<Subject> subjectStore;
     private static List<Score> ScoreStore;
+
     // 과목 타입
     private static String SUBJECT_TYPE_MANDATORY = "MANDATORY";
     private static String SUBJECT_TYPE_CHOICE = "CHOICE";
+
+
+
     // index 관리 필드
     private static int studentIndex;
     private static final String INDEX_TYPE_STUDENT = "ST";
-
+    private static int subjectIndex;
+    private static final String INDEX_TYPE_SUBJECT = "SU";
+    private static int scoreIndex;
+    private static final String INDEX_TYPE_SCORE = "SC";
 
     // 스캐너
     private static Scanner sc = new Scanner(System.in);
@@ -46,39 +45,82 @@ public class CampManagementApplication {
         try {
             displayMainView();
         } catch (Exception e) {
-            System.out.println(e + "\n오류 발생!\n프로그램을 종료합니다.");
+            System.out.println("\n오류 발생!\n프로그램을 종료합니다.");
         }
     }
-    public static void setStudentStore(String key) {
-        studentStore.get(key);
-    }
-    public static Map<String,List<Subject>> getManagement(){
-        return management;
-    }
-    public static void setManagement(String string,List<Subject> subjectList) {
-        management.put(string,subjectList);
-    }
-    public static void setStudentStore(String studentId,Student student){
-        studentStore.put(studentId,student);
-    }
-
-    public static List<Score> getScoreStore(){
-        return ScoreStore;
-    }
-
 
     // 초기 데이터 생성
     private static void setInitData() {
-        management = new HashMap<>();
-        studentStore = new HashMap<>();
+        studentStore = new ArrayList<>();
+        subjectStore = List.of(
+                new Subject(
+                        sequence(INDEX_TYPE_SUBJECT),
+                        "Java",
+                        SUBJECT_TYPE_MANDATORY
+                ),
+                new Subject(
+                        sequence(INDEX_TYPE_SUBJECT),
+                        "객체지향",
+                        SUBJECT_TYPE_MANDATORY
+                ),
+                new Subject(
+                        sequence(INDEX_TYPE_SUBJECT),
+                        "Spring",
+                        SUBJECT_TYPE_MANDATORY
+                ),
+                new Subject(
+                        sequence(INDEX_TYPE_SUBJECT),
+                        "JPA",
+                        SUBJECT_TYPE_MANDATORY
+                ),
+                new Subject(
+                        sequence(INDEX_TYPE_SUBJECT),
+                        "MySQL",
+                        SUBJECT_TYPE_MANDATORY
+                ),
+                new Subject(
+                        sequence(INDEX_TYPE_SUBJECT),
+                        "디자인 패턴",
+                        SUBJECT_TYPE_CHOICE
+                ),
+                new Subject(
+                        sequence(INDEX_TYPE_SUBJECT),
+                        "Spring Security",
+                        SUBJECT_TYPE_CHOICE
+                ),
+                new Subject(
+                        sequence(INDEX_TYPE_SUBJECT),
+                        "Redis",
+                        SUBJECT_TYPE_CHOICE
+                ),
+                new Subject(
+                        sequence(INDEX_TYPE_SUBJECT),
+                        "MongoDB",
+                        SUBJECT_TYPE_CHOICE
+                )
+        );
         ScoreStore = new ArrayList<>();
+        ScoreStore.add(new Score(getStudentId(), getsubtitle(), getRound(), getScore(), getGrade()));
     }
 
-
-    public static String getSequence() {
-        studentIndex++;
-        return INDEX_TYPE_STUDENT + studentIndex;
+    // index 자동 증가
+    private static String sequence(String type) {
+        switch (type) {
+            case INDEX_TYPE_STUDENT -> {
+                studentIndex++;
+                return INDEX_TYPE_STUDENT + studentIndex;
+            }
+            case INDEX_TYPE_SUBJECT -> {
+                subjectIndex++;
+                return INDEX_TYPE_SUBJECT + subjectIndex;
+            }
+            default -> {
+                scoreIndex++;
+                return INDEX_TYPE_SCORE + scoreIndex;
+            }
+        }
     }
+
     private static void displayMainView() throws InterruptedException {
         boolean flag = true;
         while (flag) {
@@ -113,7 +155,7 @@ public class CampManagementApplication {
             System.out.println("3. 메인 화면 이동");
             System.out.print("관리 항목을 선택하세요...");
             int input = sc.nextInt();
-            sc.nextLine();
+
             switch (input) {
                 case 1 -> createStudent(); // 수강생 등록
                 case 2 -> inquireStudent(); // 수강생 목록 조회
@@ -128,29 +170,20 @@ public class CampManagementApplication {
 
     // 수강생 등록
     private static void createStudent() {
-        CreateStudent createStudent = new CreateStudent();
-        createStudent.mkStudent();
+        System.out.println("\n수강생을 등록합니다...");
+        System.out.print("수강생 이름 입력: ");
+        String studentName = sc.next();
+        // 기능 구현 (필수 과목, 선택 과목)
+
+        Student student = new Student(sequence(INDEX_TYPE_STUDENT), studentName); // 수강생 인스턴스 생성 예시 코드
+        // 기능 구현
+        System.out.println("수강생 등록 성공!\n");
     }
+
     // 수강생 목록 조회
     private static void inquireStudent() {
         System.out.println("\n수강생 목록을 조회합니다...");
-        if (!management.isEmpty()) {
-            System.out.println("\n현재 등록된 수강생:");
-            for (Map.Entry<String, List<Subject>> entry : management.entrySet()) {
-                String studentId = entry.getKey();
-                Student student = studentStore.get(studentId);
-                List<Subject> subjects = entry.getValue();
-                System.out.println("학생 ID: " + studentId);
-                System.out.println("학생 이름: " + student.getStudentName());
-                System.out.println("수강 과목:");
-                for (Subject subject : subjects) {
-                    System.out.println(subject);
-                }
-                System.out.println();
-            }
-        } else {
-            System.out.println("\n등록된 수강생이 없습니다.");
-        }
+        // 기능 구현
         System.out.println("\n수강생 목록 조회 성공!");
     }
 
@@ -179,19 +212,13 @@ public class CampManagementApplication {
         }
     }
 
-    private static String inputStudentId() {
-        System.out.print("\n관리할 수강생의 번호를 입력하시오...");
-        return sc.next();
-    }
-
-    // 수강생의 과목별 시험 회차 및 점수 등록
     private static String getStudentId() {
         System.out.print("\n관리할 수강생의 번호를 입력하시오...");
         return sc.next();
     }
-    private static int getsubjectId() {
+    private static String getsubtitle() {
         System.out.print("\n과목을 입력해 주세요");
-        return sc.nextInt();
+        return sc.next();
     }
     private static int getRound() {
         System.out.print("\n회차를 입력해 주세요");
@@ -201,21 +228,67 @@ public class CampManagementApplication {
         System.out.print("\n점수를 입력해 주세요");
         return sc.nextInt();
     }
+    private static String getGrade() {
+        String grade ="0";
+        if (Objects.equals(getsubtitle(), "Java") || Objects.equals(getsubtitle(), "객체지향") || Objects.equals(getsubtitle(), "Spring") || Objects.equals(getsubtitle(), "JAP") || Objects.equals(getsubtitle(), "MySQL")) {
+            if (getScore() >= 95) {
+                grade = "A";
+            } else if (getScore() <= 94 && getScore() >= 90) {
+                grade = "B";
+            } else if (getScore() <= 89 && getScore() >= 80) {
+                grade = "C";
+            } else if (getScore() <= 79 && getScore() >= 70) {
+                grade = "D";
+            } else if (getScore() <= 69 && getScore() >= 60) {
+                grade = "F";
+            } else {
+                grade = "N";
+            }
+
+        } else if (Objects.equals(getsubtitle(), "디자인 패턴") || Objects.equals(getsubtitle(), "Spring Security") || Objects.equals(getsubtitle(), "Redis") || Objects.equals(getsubtitle(), "MongoDB")) {
+            if (getScore() >= 90) {
+                grade = "A";
+            } else if (getScore() <= 89 && getScore() >= 80) {
+                grade = "B";
+            } else if (getScore() <= 79 && getScore() >= 70) {
+                grade = "C";
+            } else if (getScore() <= 69 && getScore() >= 60) {
+                grade = "D";
+            } else if (getScore() <= 59 && getScore() >= 50) {
+                grade = "F";
+            } else {
+                grade = "N";
+            }
+        }
+
+        return grade;
+    }
+
+
+
+
+
+
     // 수강생의 과목별 시험 회차 및 점수 등록
+    private static void createScore() {
 
-    //민규님
-   private static void createScore() {
-            CreateScore score = new CreateScore();
-            ScoreStore.add( score.checkScore());
+        String studentId = getStudentId(); // 관리할 수강생 고유 번호
+        System.out.println(studentId + " 번 학생의 점수 등록을 시작합니다");
+        String subtitle = getsubtitle();    // 과목
+        int round = getRound();         //회차
+        int score = getScore();         //점수
+        String grade = getGrade();
 
-       for(Score Score : ScoreStore){
-           System.out.println(Score.getStudentId() + "번 학생의 " + Score.getSubjectId() + "과목의 " + Score.getRound() + "회차 점수는 " +Score.getScore() + "점 입니다.");
-       }
-   }
+
+        System.out.println("시험 점수를 등록합니다...");
+
+        // 기능 구현
+        System.out.println("\n점수 등록 성공!");
+    }
 
     // 수강생의 과목별 회차 점수 수정
     private static void updateRoundScoreBySubject() {
-        String studentId = inputStudentId(); // 관리할 수강생 고유 번호
+        String studentId = getStudentId(); // 관리할 수강생 고유 번호
         // 기능 구현 (수정할 과목 및 회차, 점수)
         System.out.println("시험 점수를 수정합니다...");
         // 기능 구현
@@ -224,7 +297,7 @@ public class CampManagementApplication {
 
     // 수강생의 특정 과목 회차별 등급 조회
     private static void inquireRoundGradeBySubject() {
-        String studentId = inputStudentId(); // 관리할 수강생 고유 번호
+        String studentId = getStudentId(); // 관리할 수강생 고유 번호
         // 기능 구현 (조회할 특정 과목)
         System.out.println("회차별 등급을 조회합니다...");
         // 기능 구현
