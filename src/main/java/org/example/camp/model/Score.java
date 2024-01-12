@@ -12,4 +12,9 @@ public class Score {
         return scoreId;
     }
 
+    public void setSubjectName(String subjectName) {
+    }
+
+    public void setScoreValue(int scoreValue) {
+    }
 }
