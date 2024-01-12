@@ -22,7 +22,7 @@ public class Score {
         return studentId;
     }
 
-    public int getSubject() {
+    public int getSubjectId() {
         return subjectId;
     }
 

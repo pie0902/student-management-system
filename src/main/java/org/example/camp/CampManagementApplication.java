@@ -9,7 +9,7 @@ import org.example.camp.model.Subject;
 import java.util.*;
 import java.util.List;
 
-/**
+/*
  * Notification
  * Java, 객체지향이 아직 익숙하지 않은 분들은 위한 소스코드 틀입니다.
  * main 메서드를 실행하면 프로그램이 실행됩니다.
@@ -17,9 +17,11 @@ import java.util.List;
  * 프로젝트 구조를 변경하거나 기능을 추가해도 괜찮습니다!
  * 구현에 도움을 주기위한 Base 프로젝트입니다. 자유롭게 이용해주세요!
  */
+
 // 일단    Map<학생 ID, List<과목ID>>       로 한 학생당 어떤 과목 수강하는지 관리하는 리스트 만들기
 // 과목 ID를 고정시키기
 // 점수 관리해주기 Map<학생ID,Map<과목ID,List<점수>>
+
 public class CampManagementApplication {
     private static Map<String,List<Subject>> management; //Map<학생 ID, List<과목ID>>
     // 데이터 저장소
@@ -58,6 +60,9 @@ public class CampManagementApplication {
         studentStore.put(studentId,student);
     }
 
+    public static List<Score> getScoreStore(){
+        return ScoreStore;
+    }
 
 
     // 초기 데이터 생성
@@ -199,8 +204,11 @@ public class CampManagementApplication {
     //민규님
    private static void createScore() {
             CreateScore score = new CreateScore();
-            score.checkScore();
-            ScoreStore.add(score.getScoreStore());
+            ScoreStore.add( score.checkScore());
+
+       for(Score Score : ScoreStore){
+           System.out.println(Score.getStudentId() +"번 학생의 " + Score.getSubjectId() + "과목의 " + Score.getRound() + "회차 점수는 " +Score.getScore() + "점 입니다.");
+       }
    }
 
     // 수강생의 과목별 회차 점수 수정
