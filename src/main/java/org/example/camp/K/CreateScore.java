@@ -1,42 +1,52 @@
 package org.example.camp.K;
 
+import org.example.camp.CampManagementApplication;
 import org.example.camp.model.Score;
 
 import java.util.List;
 import java.util.Scanner;
 
 public class CreateScore {
-        Score scoreStore;
-        private static Scanner sc = new Scanner(System.in);
+    Score scoreStore;
+    private static Scanner sc = new Scanner(System.in);
     // 수강생의 과목별 시험 회차 및 점수 등록
-        public CreateScore() {
+    public CreateScore() {
+
+    }
+    public Score checkScore(){
+        String studentId = getStudentId(); // 관리할 수강생 고유 번호
+        System.out.println(studentId + " 번 학생의 점수 등록을 시작합니다");
+        int subjectId = getsubjectId();    // 과목
+        int round = getRound();         //회차
+
+        for(Score Id : CampManagementApplication.getScoreStore()){
+            if(studentId.equals(Id.getStudentId())){
+                if(subjectId==Id.getSubjectId()){
+                    if(round==Id.getRound()){
+                        System.out.println("이미 입력한 회차 입니다.");
+                    }
+                }
+            }
 
         }
-        public void checkScore(){
-            String studentId = getStudentId(); // 관리할 수강생 고유 번호
-            System.out.println(studentId + " 번 학생의 점수 등록을 시작합니다");
-            int subjectId = getsubjectId();    // 과목
-            int round = getRound();         //회차
-            int score = getScore();         //점수
-            if(round>=11 || 0 >= round) {
-                System.out.println("회차 값을 잘못 입력하였습니다.");
-                return;
-            }
-            if (score>100 || 0> score ){
-                System.out.println("점수 값을 잘못 입력하였습니다");
-                return;
-            }
-            scoreStore = new Score(studentId, subjectId, round, score);
-            System.out.println(studentId +"번 학생의 " + subjectId + "번 과목의 " + round + "회차 점수는 " + score + "점 입니다.");
-            System.out.println("시험 점수를 등록합니다...");
 
-            // 기능 구현
-            System.out.println("\n점수 등록 성공!");
 
-        }
+        int score = getScore();         //점수
+
+        scoreStore = new Score(studentId, subjectId, round, score);
+
+
+        System.out.println("시험 점수를 등록합니다...");
+
+        // 기능 구현
+        System.out.println("\n점수 등록 성공!");
+
+        return scoreStore;
+
+    }
 
     public Score getScoreStore(){
-            return scoreStore;
+        return scoreStore;
     }
     private static String getStudentId() {
         System.out.print("\n관리할 수강생의 아디이값을 입력하시오...");
