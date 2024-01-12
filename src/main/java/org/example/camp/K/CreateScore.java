@@ -27,7 +27,7 @@ public class CreateScore {
                 return;
             }
             scoreStore = new Score(studentId, subjectId, round, score);
-            System.out.println(getStudentId() +"번 학생의 " + getsubjectId() + "번 과목의 " + getRound() + "회차 점수는 " + getScore() + "점 입니다.");
+            System.out.println(studentId +"번 학생의 " + subjectId + "번 과목의 " + round + "회차 점수는 " + score + "점 입니다.");
             System.out.println("시험 점수를 등록합니다...");
 
             // 기능 구현
