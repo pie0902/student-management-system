@@ -1,18 +1,18 @@
-package org.example.camp.model;
+package org.example.camp.A.model;
 
 public class Subject {
-    private int subjectId;
+    private String subjectId;
     private String subjectName;
     private String subjectType;
 
-    public Subject(int seq, String subjectName, String subjectType) {
+    public Subject(String seq, String subjectName, String subjectType) {
         this.subjectId = seq;
         this.subjectName = subjectName;
         this.subjectType = subjectType;
     }
 
     // Getter
-    public int getSubjectId() {
+    public String getSubjectId() {
         return subjectId;
     }
 
@@ -24,8 +24,4 @@ public class Subject {
         return subjectType;
     }
 
-    @Override
-    public String toString() {
-        return subjectId +" "+subjectName+ " "+subjectType;
-    }
 }
