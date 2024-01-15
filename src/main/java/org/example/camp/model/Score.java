@@ -32,4 +32,8 @@ public class Score {
     public int getScore(){
         return score;
     }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> dev
