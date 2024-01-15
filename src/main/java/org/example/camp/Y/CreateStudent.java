@@ -19,17 +19,17 @@ public class CreateStudent {
     public CreateStudent() {
         studentStore = new HashMap<>();
         newSubjectStore = new ArrayList<>();
-
     }
-
-
     public void mkStudent() {
         List<Integer> index;
         System.out.println("\n수강생을 등록합니다...");
         System.out.print("수강생 이름 입력: ");
-        String studentName = sc.next();
+        String studentName = sc.nextLine();
+        System.out.println("수강생의 상태를 선택해주세요\n[1.좋음 , 2.보통 ,3.요주인물]");
+        int choiceStatus = sc.nextInt();
+
         // 기능 구현 (필수 과목, 선택 과목)
-        Student student = new Student(CampManagementApplication.getSequence(), studentName);
+        Student student = new Student(CampManagementApplication.getSequence(), studentName,choiceStatus);
         System.out.println(student);
         studentStore.put(student.getStudentId(), student);// 수강생 인스턴스 생성 예시 코드
         CampManagementApplication.setStudentStore(student.getStudentId(),student);
@@ -56,6 +56,8 @@ public class CreateStudent {
         System.out.println("수강생 등록 성공!\n");
     }
 
+    //예외처리
+    //선택과목 중복,최소 수강과목 개수 부족
     private List<Integer> selectSubject() {
         List<Integer> subSelectList = new ArrayList<>();
         int num;
@@ -69,7 +71,7 @@ public class CreateStudent {
             num = sc.nextInt();
             sc.nextLine();
             if (num == 0) {
-                if (cnt1 < 3 && cnt2 < 2) {
+                if (cnt1 < 3 || cnt2 < 2) {
                     System.out.println("필수과목을 " + cnt1 + "개 " + "선택과목을 " + cnt2 + "개 선택하셨습니다.");
                     System.out.println("필수과목은 3개 이상, 선택과목은 2개 이상을 선택하세요");
                 } else {
