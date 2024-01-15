@@ -7,9 +7,8 @@ import java.util.List;
 import java.util.Scanner;
 
 public class CreateScore {
-
-    Score scoreStore = new Score();
-    private static Scanner sc = new Scanner(System.in);
+    private Score scoreStore;
+    private Scanner sc = new Scanner(System.in);
 
     // 수강생의 과목별 시험 회차 및 점수 등록
 
@@ -57,6 +56,7 @@ public class CreateScore {
         return scoreStore;
     }
 
+
     public Score getScoreStore() {
         return scoreStore;
     }
@@ -73,12 +73,15 @@ public class CreateScore {
         return sc.nextInt();
     }
 
-    private static int getRound() {
+
+    private int getRound() {
+
         System.out.print("\n회차를 입력해 주세요");
         return sc.nextInt();
     }
 
-    private static int getScore() {
+    private int getScore() {
+
         System.out.print("\n점수를 입력해 주세요");
         return sc.nextInt();
     }
