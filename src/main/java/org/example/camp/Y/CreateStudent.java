@@ -8,20 +8,19 @@ import java.util.*;
 
 public class CreateStudent {
     private Scanner sc = new Scanner(System.in);
-    private HashMap<String, Student> studentStore;
-    private String[] titleList = {"Java", "객체지향", "Spring", "JPA", "MySQL", "디자인 패턴", "Spring", "SecurityReids", "MongoDB"};
+    private final String[] titleList = {"Java", "객체지향", "Spring", "JPA", "MySQL", "디자인 패턴", "Spring", "SecurityReids", "MongoDB"};
     private String SUBJECT_TYPE_MANDATORY = "MANDATORY";
     private String SUBJECT_TYPE_CHOICE = "CHOICE";
     private final int MIN_MANDATORY_NUM = 3;
     private final int MIN_CHOICE_NUM = 2;
     private int mandatoryIndex = 0;
     private int choiceIndex = 0;
-    private static List<Subject> newSubjectStore;
-    private List<Integer> subSelectList = new ArrayList<>();
+    private final List<Subject> newSubjectStore;
+    private final List<Integer> subSelectList;
 
     public CreateStudent() {
-        studentStore = new HashMap<>();
         newSubjectStore = new ArrayList<>();
+        subSelectList = new ArrayList<>();
     }
 
     public void mkStudent() {
@@ -34,22 +33,14 @@ public class CreateStudent {
         // 기능 구현 (필수 과목, 선택 과목)
         Student student = new Student(CampManagementApplication.getSequence(), studentName, choiceStatus);
         System.out.println(student);
-        studentStore.put(student.getStudentId(), student);// 수강생 인스턴스 생성 예시 코드
         CampManagementApplication.setStudentStore(student.getStudentId(), student);
 
         selectSubject();
 
         for (int idName : subSelectList) {
-            if (idName == 0) {
-                continue;
-            }
             String subjectName = titleList[idName - 1];
-            String type;
-            if (idName < 5) {
-                type = SUBJECT_TYPE_MANDATORY;
-            } else {
-                type = SUBJECT_TYPE_CHOICE;
-            }
+            String type = idName <= 5 ? SUBJECT_TYPE_MANDATORY : SUBJECT_TYPE_CHOICE;
+
             Subject subject = new Subject(idName, subjectName, type);
             newSubjectStore.add(subject);
         }
@@ -59,7 +50,7 @@ public class CreateStudent {
         }
         CampManagementApplication.setManagement(student.getStudentId(), newSubjectStore);
         System.out.println("수강생 등록 성공!\n");
-        System.out.println(mandatoryIndex + " " + choiceIndex);
+
     }
 
     //예외처리
