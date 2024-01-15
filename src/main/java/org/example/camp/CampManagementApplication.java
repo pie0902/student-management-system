@@ -6,10 +6,6 @@ import org.example.camp.Y.CreateStudent;
 import org.example.camp.model.Score;
 import org.example.camp.model.Student;
 import org.example.camp.model.Subject;
-<<<<<<< HEAD
-=======
-
->>>>>>> dev
 import java.util.*;
 import java.util.List;
 
@@ -27,7 +23,6 @@ import java.util.List;
 // 점수 관리해주기 Map<학생ID,Map<과목ID,List<점수>>
 
 public class CampManagementApplication {
-<<<<<<< HEAD
     private static Map<String,List<Subject>> management; //Map<학생 ID, List<과목ID>>
     // 데이터 저장소
 
@@ -38,14 +33,6 @@ public class CampManagementApplication {
     // 과목 타입
     private static String SUBJECT_TYPE_MANDATORY = "MANDATORY";
     private static String SUBJECT_TYPE_CHOICE = "CHOICE";
-=======
-    private static Map<String, List<Subject>> management; //Map<학생 ID, List<과목ID>>
-    // 데이터 저장소
-    //학생관리
-    private static HashMap<String, Student> studentStore;
-    private static List<Score> ScoreStore;
-    // 과목 타입
->>>>>>> dev
     // index 관리 필드
     private static int studentIndex;
     private static final String INDEX_TYPE_STUDENT = "ST";
@@ -80,27 +67,6 @@ public class CampManagementApplication {
     }
 
 
-    public static void setStudentStore(String key) {
-        studentStore.get(key);
-    }
-
-    public static Map<String, List<Subject>> getManagement() {
-        return management;
-    }
-
-    public static void setManagement(String string, List<Subject> subjectList) {
-        management.put(string, subjectList);
-    }
-
-    public static void setStudentStore(String studentId, Student student) {
-        studentStore.put(studentId, student);
-    }
-
-    public static List<Score> getScoreStore() {
-        return ScoreStore;
-    }
-
-
     // 초기 데이터 생성
     private static void setInitData() {
         management = new HashMap<>();
@@ -108,14 +74,6 @@ public class CampManagementApplication {
         ScoreStore = new ArrayList<>();
     }
 
-<<<<<<< HEAD
-=======
-
-    public static String getSequence() {
-        studentIndex++;
-        return INDEX_TYPE_STUDENT + studentIndex;
-    }
->>>>>>> dev
 
     public static String getSequence() {
         studentIndex++;
@@ -153,7 +111,6 @@ public class CampManagementApplication {
             System.out.println("1. 수강생 등록");
             System.out.println("2. 수강생 목록 조회");
             System.out.println("3. 메인 화면 이동");
-            System.out.println("4. 수강생 정보 삭제");
             System.out.print("관리 항목을 선택하세요...");
             int input = sc.nextInt();
             sc.nextLine();
@@ -161,7 +118,6 @@ public class CampManagementApplication {
                 case 1 -> createStudent(); // 수강생 등록
                 case 2 -> inquireStudent(); // 수강생 목록 조회
                 case 3 -> flag = false; // 메인 화면 이동
-                case 4 -> deleteStudent();
                 default -> {
                     System.out.println("잘못된 입력입니다.\n메인 화면 이동...");
                     flag = false;
@@ -169,6 +125,7 @@ public class CampManagementApplication {
             }
         }
     }
+
     // 수강생 등록
     private static void createStudent() {
         CreateStudent createStudent = new CreateStudent();
@@ -179,7 +136,6 @@ public class CampManagementApplication {
         System.out.println("\n수강생 목록을 조회합니다...");
         if (!management.isEmpty()) {
             System.out.println("\n현재 등록된 수강생:");
-<<<<<<< HEAD
             for (Map.Entry<String, List<Subject>> entry : management.entrySet()) {
                 String studentId = entry.getKey();
                 Student student = studentStore.get(studentId);
@@ -192,28 +148,10 @@ public class CampManagementApplication {
                 }
                 System.out.println();
             }
-=======
-            showStudentList();
->>>>>>> dev
         } else {
             System.out.println("\n등록된 수강생이 없습니다.");
         }
         System.out.println("\n수강생 목록 조회 성공!");
-    }
-
-    private static void showStudentList() {
-        for (Map.Entry<String, List<Subject>> entry : management.entrySet()) {
-            String studentId = entry.getKey();
-            Student student = studentStore.get(studentId);
-            List<Subject> subjects = entry.getValue();
-            System.out.println("학생 ID: " + studentId);
-            System.out.println("학생 이름: " + student.getStudentName());
-            System.out.println("수강 과목:");
-            for (Subject subject : subjects) {
-                System.out.println(subject);
-            }
-            System.out.println();
-        }
     }
 
     private static void displayScoreView() {
@@ -245,22 +183,11 @@ public class CampManagementApplication {
         System.out.print("\n관리할 수강생의 번호를 입력하시오...");
         return sc.next();
     }
-<<<<<<< HEAD
 
     // 수강생의 과목별 시험 회차 및 점수 등록
     private static String getStudentId() {
         System.out.print("\n관리할 수강생의 번호를 입력하시오...");
         return sc.next();
-=======
-    //민규님
-    private static void createScore() {
-        CreateScore score = new CreateScore();
-        ScoreStore.add(score.checkScore());
-
-        for (Score Score : ScoreStore) {
-            System.out.println(Score.getStudentId() + "번 학생의 " + Score.getSubjectId() + "과목의 " + Score.getRound() + "회차 점수는 " + Score.getScore() + "점 입니다.");
-        }
->>>>>>> dev
     }
     private static int getsubjectId() {
         System.out.print("\n과목을 입력해 주세요");
@@ -277,14 +204,10 @@ public class CampManagementApplication {
     // 수강생의 과목별 시험 회차 및 점수 등록
 
     //민규님
-   private static void createScore() {
-            CreateScore score = new CreateScore();
-            ScoreStore.add( score.checkScore());
-
-       for(Score Score : ScoreStore){
-           System.out.println(Score.getStudentId() + "번 학생의 " + Score.getSubjectId() + "과목의 " + Score.getRound() + "회차 점수는 " +Score.getScore() + "점 입니다.");
-       }
-   }
+    private static void createScore() {
+        CreateScore score = new CreateScore();
+        ScoreStore.add( score.checkScore());
+    }
 
     // 수강생의 과목별 회차 점수 수정
     private static void updateRoundScoreBySubject() {
@@ -294,11 +217,8 @@ public class CampManagementApplication {
         // 기능 구현
         System.out.println("\n점수 수정 성공!");
     }
-<<<<<<< HEAD
 
-
-
-        /*********** 수강생의 특정 과목 회차별 등급 조회*********/
+    /*********** 수강생의 특정 과목 회차별 등급 조회*********/
     private static void inquireRoundGradeBySubject() {
         String studentId = inputStudentId(); // 관리할 수강생 고유 번호
 
@@ -315,15 +235,6 @@ public class CampManagementApplication {
         System.out.println("학생 ID " + studentId + "의 " +
                 "과목 ID " + subjectId + "의 " +
                 "회차 " + round + "의 등급은 " + grade + "입니다.");
-=======
-    // 수강생의 특정 과목 회차별 등급 조회
-    private static void inquireRoundGradeBySubject() {
-        String studentId = inputStudentId(); // 관리할 수강생 고유 번호
-        // 기능 구현 (조회할 특정 과목)
-        System.out.println("회차별 등급을 조회합니다...");
-        // 기능 구현
-        System.out.println("\n등급 조회 성공!");
->>>>>>> dev
     }
 
     // 등급 계산 메서드
@@ -433,6 +344,4 @@ public class CampManagementApplication {
 
         deleteStudent(studentIdToDelete);
     }
-
-
 }
