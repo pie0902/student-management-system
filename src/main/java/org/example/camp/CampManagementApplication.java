@@ -6,6 +6,7 @@ import org.example.camp.Y.CreateStudent;
 import org.example.camp.model.Score;
 import org.example.camp.model.Student;
 import org.example.camp.model.Subject;
+
 import java.util.*;
 import java.util.List;
 
@@ -23,11 +24,11 @@ import java.util.List;
 // 점수 관리해주기 Map<학생ID,Map<과목ID,List<점수>>
 
 public class CampManagementApplication {
-    private static Map<String,List<Subject>> management; //Map<학생 ID, List<과목ID>>
+    private static Map<String, List<Subject>> management; //Map<학생 ID, List<과목ID>>
     // 데이터 저장소
 
     //학생관리
-    private static HashMap<String,Student> studentStore;
+    private static HashMap<String, Student> studentStore;
 
     private static List<Score> ScoreStore;
     // 과목 타입
@@ -49,20 +50,24 @@ public class CampManagementApplication {
             System.out.println(e + "\n오류 발생!\n프로그램을 종료합니다.");
         }
     }
+
     public static void setStudentStore(String key) {
         studentStore.get(key);
     }
-    public static Map<String,List<Subject>> getManagement(){
+
+    public static Map<String, List<Subject>> getManagement() {
         return management;
     }
-    public static void setManagement(String string,List<Subject> subjectList) {
-        management.put(string,subjectList);
-    }
-    public static void setStudentStore(String studentId,Student student){
-        studentStore.put(studentId,student);
+
+    public static void setManagement(String string, List<Subject> subjectList) {
+        management.put(string, subjectList);
     }
 
-    public static List<Score> getScoreStore(){
+    public static void setStudentStore(String studentId, Student student) {
+        studentStore.put(studentId, student);
+    }
+
+    public static List<Score> getScoreStore() {
         return ScoreStore;
     }
 
@@ -79,6 +84,7 @@ public class CampManagementApplication {
         studentIndex++;
         return INDEX_TYPE_STUDENT + studentIndex;
     }
+
     private static void displayMainView() throws InterruptedException {
         boolean flag = true;
         while (flag) {
@@ -131,6 +137,7 @@ public class CampManagementApplication {
         CreateStudent createStudent = new CreateStudent();
         createStudent.mkStudent();
     }
+
     // 수강생 목록 조회
     private static void inquireStudent() {
         System.out.println("\n수강생 목록을 조회합니다...");
@@ -189,14 +196,17 @@ public class CampManagementApplication {
         System.out.print("\n관리할 수강생의 번호를 입력하시오...");
         return sc.next();
     }
+
     private static int getsubjectId() {
         System.out.print("\n과목을 입력해 주세요");
         return sc.nextInt();
     }
+
     private static int getRound() {
         System.out.print("\n회차를 입력해 주세요");
         return sc.nextInt();
     }
+
     private static int getScore() {
         System.out.print("\n점수를 입력해 주세요");
         return sc.nextInt();
@@ -205,17 +215,57 @@ public class CampManagementApplication {
 
     //민규님
     private static void createScore() {
-            CreateScore score = new CreateScore();
-            ScoreStore.add( score.checkScore());
-   }
+        CreateScore score = new CreateScore();
+        ScoreStore.add(score.checkScore());
+    }
 
     // 수강생의 과목별 회차 점수 수정
     private static void updateRoundScoreBySubject() {
-        String studentId = inputStudentId(); // 관리할 수강생 고유 번호
-        // 기능 구현 (수정할 과목 및 회차, 점수)
+        String studentId = getStudentId(); // 관리할 수강생 고유 번호
+        System.out.println("수정할 과목을 입력해 주십시오");
+        System.out.println("1.Java  2.객체지향  3.Spring  4.JPA  5.MySQL  6.디자인패턴  7.Spring Security  8.Redis  9.MonggoDB  0.취소");
+        sc.nextLine();
+        int select = sc.nextInt();
+        while (true) {
+            if (select > 0 && select <= 9) {
+                System.out.println("수정할 회차를 입력해 주십시오");
+                break;
+            } else if (select == 0) {
+                displayScoreView();
+                break;
+
+            } else {
+                System.out.println("잘못된 입력입니다");
+            }
+        }
+        int round = sc.nextInt();
+        while (true) {
+            if (round > 0 && round <= 10) {
+                System.out.println("수정할 점수를 입력해 주십시오");
+                break;
+            } else {
+                System.out.println("잘못된 입력입니다");
+            }
+        }
+        int score = sc.nextInt();
+        while (true) {
+            if (score > 0 && score <= 100) {
+                break;
+            } else {
+                System.out.println("잘못된 입력입니다");
+            }
+        }
         System.out.println("시험 점수를 수정합니다...");
-        // 기능 구현
-        System.out.println("\n점수 수정 성공!");
+
+        //점수를 수정합니다
+        for (int i = 0; i < ScoreStore.size(); i++) {
+            if (studentId.equals(ScoreStore.get(i).getStudentId())) {
+                if (select == ScoreStore.get(i).getSubjectId() && round == ScoreStore.get(i).getRound()) {
+                    ScoreStore.get(i).setScore(score);
+                }
+            }
+        }
+
     }
 
     // 수강생의 특정 과목 회차별 등급 조회
@@ -227,4 +277,35 @@ public class CampManagementApplication {
         System.out.println("\n등급 조회 성공!");
     }
 
+    private static void inquireStudentStatus() {
+        System.out.println("조회하고 싶은 수강생 상태를 입력하세요");
+        System.out.println("1.좋음  2.보통 3.요주인물 0.취소");
+
+        String[] statusArr = {"좋음", "보통", "요주인물"};
+        int status = sc.nextInt();
+        List<Student> students = new ArrayList<>();
+        if (status == 0) {
+            displayStudentView();
+        } else if (status >= 1 && status <= 3) {
+            for (Map.Entry<String, Student> entry : studentStore.entrySet()) {
+                if (entry.getValue().getStatus() == statusArr[status - 1]) {
+                    students.add(entry.getValue());
+                }
+            }
+        } else {
+            System.out.println("/n 잘못된 입력입니다");
+            inquireStudentStatus();
+        }
+        for (Student student : students) {
+            System.out.println("학생 ID: " + student.getStudentId());
+            System.out.println("학생 이름: " + student.getStudentName());
+            System.out.println("학생 상태: " + student.getStatus());
+            System.out.println();
+        }
+
+    }
+
+
 }
+
+
