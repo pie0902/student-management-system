@@ -17,7 +17,9 @@ public class Score {
     public Score() {
 
     }
-
+    public void setScore(int score) {
+        this.score = score;
+    }
     public String getStudentId() {
         return studentId;
     }
@@ -32,4 +34,8 @@ public class Score {
     public int getScore(){
         return score;
     }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> dev
