@@ -204,13 +204,9 @@ public class CampManagementApplication {
     // 수강생의 과목별 시험 회차 및 점수 등록
 
     //민규님
-   private static void createScore() {
+    private static void createScore() {
             CreateScore score = new CreateScore();
             ScoreStore.add( score.checkScore());
-
-       for(Score Score : ScoreStore){
-           System.out.println(Score.getStudentId() + "번 학생의 " + Score.getSubjectId() + "과목의 " + Score.getRound() + "회차 점수는 " +Score.getScore() + "점 입니다.");
-       }
    }
 
     // 수강생의 과목별 회차 점수 수정

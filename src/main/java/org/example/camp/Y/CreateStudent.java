@@ -25,9 +25,9 @@ public class CreateStudent {
         System.out.println("\n수강생을 등록합니다...");
         System.out.print("수강생 이름 입력: ");
         String studentName = sc.nextLine();
-        int choiceStatus = sc.nextInt();
         System.out.println("수강생의 상태를 선택해주세요\n[1.좋음 , 2.보통 ,3.요주인물]");
-        sc.nextLine();
+        int choiceStatus = sc.nextInt();
+
         // 기능 구현 (필수 과목, 선택 과목)
         Student student = new Student(CampManagementApplication.getSequence(), studentName,choiceStatus);
         System.out.println(student);
