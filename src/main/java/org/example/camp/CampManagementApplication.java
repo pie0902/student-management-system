@@ -271,6 +271,34 @@ public class CampManagementApplication {
 
     }
 
+    private static void inquireStudentStatus() {
+        System.out.println("조회하고 싶은 수강생 상태를 입력하세요");
+        System.out.println("1.좋음 2.보통 3.요주인물 0.취소");
+        String[] statusArr = {"좋음", "보통", "요주인물"};
+        int status = sc.nextInt();
+        List<Student> students = new ArrayList<>();
+        if (status == 0) {
+            displayStudentView();
+        } else if (status >= 1 && status <= 3) {
+            for (Map.Entry<String, Student> entry : studentStore.entrySet()) {
+                if (entry.getValue().getStatus() == statusArr[status - 1]) {
+                    students.add(entry.getValue());
+                }
+            }
+        } else {
+            System.out.println("/n 잘못된 입력입니다");
+            inquireStudentStatus();
+        }
+        for (Student student : students) {
+            System.out.println("학생 ID: " + student.getStudentId());
+            System.out.println("학생 이름: " + student.getStudentName());
+            System.out.println("학생 상태: " + student.getStatus());
+            System.out.println();
+        }
+    }
+
+
+
     /*********** 수강생의 특정 과목 회차별 등급 조회*********/
     private static void inquireRoundGradeBySubject() {
         String studentId = inputStudentId(); // 관리할 수강생 고유 번호
@@ -396,7 +424,6 @@ public class CampManagementApplication {
     private static void deleteStudent() {
         System.out.print("\n삭제할 수강생의 아이디를 입력하세요: ");
         String studentIdToDelete = sc.next();
-
         deleteStudent(studentIdToDelete);
     }
 }
