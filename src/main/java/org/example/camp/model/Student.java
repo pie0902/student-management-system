@@ -1,5 +1,7 @@
 package org.example.camp.model;
 
+import java.util.List;
+
 public class Student {
     private String studentId;
     private String studentName;
@@ -23,8 +25,28 @@ public class Student {
         return status;
     }
 
+<<<<<<< HEAD
+    public void setMandatorySubjects(List<Subject> mandatorySubjects) {
+    }
+
+    public void setChoiceSubjects(List<Subject> choiceSubjects) {
+    }
+
+    public void addScore(Score score) {
+    }
+
+    public Subject[] getMandatorySubjects() {
+        return new Subject[0];
+    }
+
+    public Subject[] getChoiceSubjects() {
+        return new Subject[0];
+=======
     @Override
     public String toString() {
         return studentId + studentName;
+>>>>>>> dev
     }
 }
+
+
