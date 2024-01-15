@@ -8,7 +8,7 @@ import java.util.Scanner;
 
 public class CreateScore {
     private Score scoreStore;
-    private Scanner sc = new Scanner(System.in);
+    private static Scanner sc = new Scanner(System.in);
 
     // 수강생의 과목별 시험 회차 및 점수 등록
 

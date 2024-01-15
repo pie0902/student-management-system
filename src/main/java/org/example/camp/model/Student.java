@@ -5,7 +5,6 @@ import java.util.List;
 public class Student {
     private String studentId;
     private String studentName;
-
     private String[] statusArr = {"좋음","보통","요주인물"};
     private String status;
     public Student(String seq, String studentName,int statusNum) {
@@ -25,7 +24,6 @@ public class Student {
         return status;
     }
 
-<<<<<<< HEAD
     public void setMandatorySubjects(List<Subject> mandatorySubjects) {
     }
 
@@ -41,12 +39,12 @@ public class Student {
 
     public Subject[] getChoiceSubjects() {
         return new Subject[0];
-=======
+    }
     @Override
     public String toString() {
-        return studentId + studentName;
->>>>>>> dev
+            return studentId + studentName + status;
+        }
     }
-}
+
 
 
