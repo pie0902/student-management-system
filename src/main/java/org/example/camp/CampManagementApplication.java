@@ -116,14 +116,16 @@ public class CampManagementApplication {
             System.out.println("수강생 관리 실행 중...");
             System.out.println("1. 수강생 등록");
             System.out.println("2. 수강생 목록 조회");
-            System.out.println("3. 메인 화면 이동");
+            System.out.println("3. 상태별 수강생 조회");
+            System.out.println("4. 메인 화면 이동");
             System.out.print("관리 항목을 선택하세요...");
             int input = sc.nextInt();
             sc.nextLine();
             switch (input) {
                 case 1 -> createStudent(); // 수강생 등록
                 case 2 -> inquireStudent(); // 수강생 목록 조회
-                case 3 -> flag = false; // 메인 화면 이동
+                case 3 -> inquireStudentStatus(); // 상태별 수강생 목록 조회
+                case 4 -> flag = false; // 메인 화면 이동
                 default -> {
                     System.out.println("잘못된 입력입니다.\n메인 화면 이동...");
                     flag = false;
